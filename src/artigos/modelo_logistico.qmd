@@ -1,10 +1,19 @@
+---
+title: "Modelo Logistico "
+author: "Allan"
+date: "2026-09-07"
+categories: [estatística, regressão]
+image: exemplo.png
+format: html
+---
+
 # Setup inicial
 - importa biblioteca do ISLR 
 - printa um "resumo" do dataset 'Default'
 
 ```{r}
-install.packages('ISLR')
-library(ISLR) # importa os datasets usados no livro
+install.packages('ISLR2', repos = "https://cloud.r-project.org")
+library(ISLR2) # importa os datasets usados no livro
 data(Default) # dataset usado no cap 4 para classificação de inadimplência
 ```
 
@@ -55,4 +64,4 @@ MAS, se olharmos apenas a taxa de acerto entre os clientes que **realmente deram
 (sensibilidade/recall da classe positiva), essa taxa cai para cerca de 30% — o que é muito baixo.
 
 Esse é um modelo simples com threshold de 0.5, mas precisamos nos atentar a isso: a acurácia 
-geral pode esconder um desempenho ruim justamente na decisão que mais importa.
+geral pode esconder um desempenho ruim justamente na decisão que mais importa.⏎                  
