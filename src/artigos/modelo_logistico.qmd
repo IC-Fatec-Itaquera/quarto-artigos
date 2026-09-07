@@ -1,0 +1,67 @@
+---
+title: "Modelo Logistico "
+author: "Allan"
+date: "2026-09-07"
+categories: [estatística, regressão]
+image: exemplo.png
+format: html
+---
+
+# Setup inicial
+- importa biblioteca do ISLR 
+- printa um "resumo" do dataset 'Default'
+
+```{r}
+install.packages('ISLR2', repos = "https://cloud.r-project.org")
+library(ISLR2) # importa os datasets usados no livro
+data(Default) # dataset usado no cap 4 para classificação de inadimplência
+```
+
+# Visualizando a tabela (parte dela)
+```{r}
+head(Default)
+
+Default$default <- factor(Default$default, levels = c("No", "Yes")) 
+# dizendo pro R tratar "No" como 0 e "Yes" como 1,
+```
+
+# Modelo Logístico
+O modelo usa a função `glm` (**Generalized** Linear Model) com os campos `default` e `balance` 
+do dataset `Default` para montar o modelo logístico. O `~` serve para dizer à função qual é 
+a **saída/resposta** (`default` / inadimplência) e qual é a **entrada/preditor** (`balance`). 
+`family = binomial` diz à função `glm` para usar a fórmula matemática da curva logística.
+
+```{r}
+modelo <- glm(default ~ balance, data = Default, family = binomial)
+```
+
+# Teste com novos inputs
+`novos_dados` são apenas dados de teste básico para ver se o modelo funciona de forma mais direta — 
+tipo um teste unitário com novos inputs. Os valores foram tirados do livro, e tiveram o mesmo 
+resultado que o do livro.
+
+```{r}
+novos_dados <- data.frame(balance = c(1000, 2000))
+predict(modelo, novos_dados, type = "response")
+```
+
+# Definindo a classificação
+Aqui, primeiro atribuímos os valores previstos à variável `probabilidades`, e então na variável 
+`classificacao` definimos uma lógica simples: se a probabilidade for maior que 0.5, resposta 
+"Yes" para inadimplente; se não, "No".
+
+```{r}
+probabilidades <- predict(modelo, Default, type = "response")
+classificacao <- ifelse(probabilidades > 0.5, "Yes", "No")
+
+table(Previsto = classificacao, Real = Default$default)
+```
+
+# Problema
+Esse modelo tem um problema: se pegarmos os valores acertados sobre o total (acurácia geral), 
+vemos que ele tem aproximadamente 97% de acerto, o que à primeira vista parece muito bom. 
+MAS, se olharmos apenas a taxa de acerto entre os clientes que **realmente deram calote** 
+(sensibilidade/recall da classe positiva), essa taxa cai para cerca de 30% — o que é muito baixo.
+
+Esse é um modelo simples com threshold de 0.5, mas precisamos nos atentar a isso: a acurácia 
+geral pode esconder um desempenho ruim justamente na decisão que mais importa.⏎                  

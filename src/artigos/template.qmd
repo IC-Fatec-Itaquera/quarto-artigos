@@ -1,0 +1,10 @@
+---
+title: "TITULO"
+author: "SEU NOME"
+date: "2026-09-07"
+categories: [estatística, regressão]
+image: exemplo.png
+---
+## Template 
+
+essa pagina é um template de exemplo para criar outras paginas 
