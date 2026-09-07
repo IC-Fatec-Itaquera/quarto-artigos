@@ -1,0 +1,29 @@
+# Quarto build output
+/_site/
+/.quarto/
+
+# Freeze (cache de execução de código R/Python)
+# Se quiser versionar o freeze pra builds reprodutíveis no GitHub Pages
+# sem precisar re-rodar o R toda vez, comente essa linha
+/_freeze/
+
+# Arquivos temporários de renderização por documento
+*_files/
+*_cache/
+
+# RStudio
+.Rproj.user/
+*.Rproj
+
+# R
+.Rhistory
+.RData
+.Ruserdata
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Ambientes/segredos (se usarem API keys etc)
+.Renviron
+.env
