@@ -27,3 +27,5 @@ Thumbs.db
 # Ambientes/segredos (se usarem API keys etc)
 .Renviron
 .env
+
+**/*.quarto_ipynb
