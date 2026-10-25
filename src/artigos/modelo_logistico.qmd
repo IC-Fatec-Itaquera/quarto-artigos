@@ -12,7 +12,6 @@ format: html
 - printa um "resumo" do dataset 'Default'
 
 ```{r}
-install.packages('ISLR2', repos = "https://cloud.r-project.org")
 library(ISLR2) # importa os datasets usados no livro
 data(Default) # dataset usado no cap 4 para classificação de inadimplência
 ```
