@@ -116,9 +116,22 @@ renv::snapshot()
 Por fim, commit o `renv.lock` atualizado junto com o artigo:
 
 ```bash
-git add src/renv.lock src/artigos/novo-artigo.qmd
+git add src/renv.lock src/paginas/artigos/novo-artigo/
 git commit -m "feat - novo artigo e dependencia"
 ```
+
+Cada artigo fica em sua própria subpasta dentro de `src/paginas/artigos/`, com o texto no `index.qmd` e os arquivos auxiliares (csv, imagens) ao lado:
+
+```text
+src/paginas/artigos/
+  index.qmd                  # página que lista os artigos
+  novo-artigo/
+    index.qmd                # o artigo
+    dados.csv                # lido com read.csv("dados.csv")
+    imagem.png               # referenciada com image: imagem.png
+```
+
+O `listing` em `src/paginas/artigos/index.qmd` usa `contents: .`, então toda subpasta com um `index.qmd` aparece automaticamente na lista. Pastas que começam com `_` ficam fora do site e do listing (úteis para templates e rascunhos).
 
 Se o pacote ainda não aparecer no lockfile, você pode informá-lo explicitamente:
 
