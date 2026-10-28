@@ -1,0 +1,9 @@
+---
+title: "Artigos"
+listing:
+  contents: .            # lista os artigos nas subpastas desta pasta
+  sort: "date desc"
+  type: default
+  categories: true
+  fields: [image, date, title, author, reading-time]
+---
