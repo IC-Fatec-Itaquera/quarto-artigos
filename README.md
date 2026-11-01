@@ -101,11 +101,11 @@ renv::install("nome-do-pacote")
 
 Use o pacote normalmente no artigo:
 
-````markdown
-```{r}
-library(nome-do-pacote)
+```markdown
+    ```{r}
+    library(nome-do-pacote)
+    ```
 ```
-````
 
 Depois registre a dependência no lockfile:
 
@@ -214,3 +214,7 @@ isso não é uma regra, mas seria bom se todos usasem esse padrão de commit
 nao me importo com o padrao de nome da branch, mas sugiro esse padrão: 
     {seu_nome}-{coisa_que_voce_fez}
 
+
+# katex, biblioteca de simbolos matematicos 
+
+[referencia rapida](https://katex.org/docs/supported.html)
