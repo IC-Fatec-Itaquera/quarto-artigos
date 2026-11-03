@@ -1,0 +1,48 @@
+---
+title: "modelo de classificação de tumores suspeitos"
+format: html
+---
+
+# introduçao ao data set 
+o dataset  Breast Cancer Wisconsin ,é um dataset baseado em uma pesquisa para criar 
+metodos menos invasivos de diagnostico de cancer de mamas, a pesquisa foi feita retirando
+liquido dos tumores, e analisando a imagem das celulas, e sua seria de features.
+
+```{r}
+library(corrplot)
+study <- read.csv(file = "tumores.csv", sep = ",", dec= ".", header = TRUE)
+# transformando "maligno" em 1.
+study$diagnosis <- ifelse(study$diagnosis == "M",1,0)
+```
+
+# corelação das variaveis 
+no artigo original, ele cita que tumores que não são grandes, Mas que um pequeno tumore maligno, pode 
+crescer e se tornar uma seria de outros tumores malignos, nossa proposta é de identificar esses tumores
+malignos que nao tenham um tamanho tao proeminente 
+
+```{r}
+source("funcs/funcoes_correlacao.R")
+
+#removendo as colunas que nao servem pra analise de corelação.
+dados_cor <- subset(study, select = -c(id,X))
+matriz_cor <- cor(dados_cor)
+corrplot(matriz_cor)
+```
+podemos pegar no 'olhometro' variaveis que tenham corelaçao, mas melhor que isso vamos pegar um lista de 
+variaveis cuja o coeficiente de corelacao seja maior que 0.8
+
+```{r}
+study.corelations <- tabela_correlacoes(matriz_cor, limite = 0.8)
+study.corelations
+```
+# nosso estudo é clasificar tumores pequenos como malignos, por seus formatos suspeitos
+vamos agora definir:
+ - oque é um tumor pequeno
+ - oque é um formato suspeito 
+
+vamos pegar variaveis de media que estao relacionadas com o formato dos tumores 
+
+```{r}
+# buscar por correlacao em uma tabela de corelacao
+ocorrencias_correlacao(study.corelations, "area_mean")
+```
