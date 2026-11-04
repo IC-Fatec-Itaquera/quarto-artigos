@@ -1,48 +1,190 @@
 ---
-title: "modelo de classificação de tumores suspeitos"
-format: html
+title: "Modelo de classificação de tumores suspeitos"
+subtitle: "Uma primeira abordagem com regressão logística"
+author: "Allan"
+date: "2026-11-04"
+description: "Classificação de tumores de mama como malignos ou benignos a partir de variáveis morfológicas."
+categories: [estatística, classificação, saúde]
+lang: pt-BR
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    toc-title: "Nesta página"
+    number-sections: true
+    code-fold: true
+    code-summary: "Mostrar código"
+    fig-align: center
+execute:
+  comment: ""
+  message: false
+  warning: false
 ---
 
-# introduçao ao data set 
-o dataset  Breast Cancer Wisconsin ,é um dataset baseado em uma pesquisa para criar 
-metodos menos invasivos de diagnostico de cancer de mamas, a pesquisa foi feita retirando
-liquido dos tumores, e analisando a imagem das celulas, e sua seria de features.
+# Entendendo o problema
+
+## O dataset Breast Cancer Wisconsin
+
+O dataset **Breast Cancer Wisconsin** foi construído a partir de uma pesquisa que buscava métodos menos invasivos para o diagnóstico do câncer de mama. Na pesquisa, líquido dos tumores era coletado e as imagens das células eram analisadas para extrair uma série de características morfológicas.
+
+Cada observação do conjunto descreve um tumor por meio de medidas como área, textura, raio, perímetro e compacidade. O objetivo é usar essas características para distinguir tumores malignos de benignos.
+
+## Carregando os dados
+
+O primeiro passo é carregar a biblioteca usada para a matriz de correlação e ler o arquivo `tumores.csv`. Em seguida, a coluna `diagnosis` é convertida para o formato binário: `1` para maligno e `0` para benigno.
 
 ```{r}
+#| label: carregando-dados
+#| message: false
+
 library(corrplot)
 study <- read.csv(file = "tumores.csv", sep = ",", dec= ".", header = TRUE)
 # transformando "maligno" em 1.
 study$diagnosis <- ifelse(study$diagnosis == "M",1,0)
 ```
 
-# corelação das variaveis 
-no artigo original, ele cita que tumores que não são grandes, Mas que um pequeno tumore maligno, pode 
-crescer e se tornar uma seria de outros tumores malignos, nossa proposta é de identificar esses tumores
-malignos que nao tenham um tamanho tao proeminente 
+## Objetivo do estudo
+
+A proposta é identificar tumores malignos que não tenham um tamanho tão proeminente. Para isso, o estudo parte da hipótese de que variáveis ligadas à forma e à textura do tumor podem ajudar a separar casos malignos de benignos.
+
+::: {.callout-note}
+## Hipótese inicial
+
+A primeira versão do modelo foi construída em torno de três variáveis: `area_mean`, `compactness_mean` e `texture_mean`. A ideia era verificar se área, textura e conformidade de um tumor seriam bons indicadores do diagnóstico.
+:::
+
+# Análise de correlação
+
+## Matriz de correlação
+
+Antes de ajustar qualquer modelo, a análise começa pela matriz de correlação. Ela mostra o grau de associação linear entre as variáveis numéricas do dataset.
+
+O código abaixo carrega as funções auxiliares de correlação, remove a coluna `id`  que é apenas um identificador, não uma característica do tumor e gera a matriz com `cor()`.
 
 ```{r}
+#| label: matriz-correlacao
+#| fig-cap: "Matriz de correlação entre as variáveis numéricas"
+#| fig-alt: "Mapa de calor com a correlação entre as variáveis do dataset"
+#| out-width: "85%"
+#| fig-width: 8
+#| fig-height: 7
+
 source("funcs/funcoes_correlacao.R")
 
 #removendo as colunas que nao servem pra analise de corelação.
-dados_cor <- subset(study, select = -c(id,X))
+dados_cor <- subset(study, select = -c(id))
 matriz_cor <- cor(dados_cor)
 corrplot(matriz_cor)
 ```
-podemos pegar no 'olhometro' variaveis que tenham corelaçao, mas melhor que isso vamos pegar um lista de 
-variaveis cuja o coeficiente de corelacao seja maior que 0.8
+
+## Variáveis com correlação acima de 0.8
+
+A matriz ajuda a identificar relações fortes visualmente, mas é mais objetivo filtrar os pares cujo coeficiente de correlação passa de um limite. 
+A função `tabela_correlacoes()` faz essa seleção com `limite = 0.8`.
 
 ```{r}
+#| label: correlacoes-fortes
+
 study.corelations <- tabela_correlacoes(matriz_cor, limite = 0.8)
-study.corelations
+head(study.corelations)
 ```
-# nosso estudo é clasificar tumores pequenos como malignos, por seus formatos suspeitos
-vamos agora definir:
- - oque é um tumor pequeno
- - oque é um formato suspeito 
-
-vamos pegar variaveis de media que estao relacionadas com o formato dos tumores 
 
 ```{r}
+#| include: false
+
+rm(dados_cor,matriz_cor)
+```
+
+## Interpretando as correlações
+
+Com a lista de correlações fortes em mãos, a próxima etapa é procurar quais variáveis aparecem associadas às medidas de interesse. 
+O código abaixo busca ocorrências de `area_mean` na tabela.
+
+```{r}
+#| label: ocorrencias-area
+
 # buscar por correlacao em uma tabela de corelacao
 ocorrencias_correlacao(study.corelations, "area_mean")
 ```
+
+A área tem uma relação fortíssima com as médias de `radius` e `perimeter`. 
+Isso faz sentido pois raio, perímetro e área são medidas geométricas relacionadas ao tamanho do tumor.
+
+A mesma busca é feita agora para `compactness_mean`, que representa a compacidade do contorno do tumor.
+
+```{r}
+#| label: ocorrencias-compactness
+
+ocorrencias_correlacao(study.corelations, "compactness_mean")
+```
+
+# Preparação dos dados
+
+## Divisão entre treino e teste
+
+Para avaliar o modelo em dados que ele não viu durante o ajuste, a base é dividida em duas partes: uma amostra de treino e uma de teste.
+A função `sampleador()` faz essa divisão e mantém a reprodutibilidade com `set.seed()`.
+
+```{r}
+#| label: divisao-treino-teste
+#| code-fold: true
+
+source('funcs/sampleador.R')
+sample_aleatoria <- sampleador(study)
+traning_sample <- sample_aleatoria[['amostra']]
+test_sample <- sample_aleatoria[['resto']]
+```
+
+# Modelo logístico
+
+## Ajuste do modelo
+
+O modelo usa `glm()` com `family = binomial` para estimar a probabilidade de um tumor ser maligno a partir de `area_mean`. 
+O `summary()` mostra os coeficientes estimados e a qualidade do ajuste.
+
+```{r}
+#| label: ajuste-modelo
+#| code-fold: false
+
+modelo <- glm(diagnosis ~ area_mean,
+  data = traning_sample,
+  family = binomial
+)
+summary(modelo)
+```
+
+## Matriz de confusão no treino
+
+A matriz de confusão compara o diagnóstico observado com a classificação prevista pelo modelo. Aqui ela é calculada na amostra de treino, usando um threshold de `0.1`.
+
+```{r}
+#| label: matriz-treino
+#| code-fold: false
+
+source("funcs/gerador_matriz_conf.R")
+
+matriz_de_treino <- conf_matriz(
+  modelo = modelo, 
+  data = traning_sample,
+  threshold = 0.1,
+  teste = FALSE)
+matriz_de_treino
+```
+
+## Matriz de confusão no teste
+
+Por fim, a mesma avaliação é repetida na amostra de teste. Essa etapa é importante porque mostra como o modelo se comporta em dados novos, e não apenas naqueles usados para ajustá-lo.
+
+```{r}
+#| label: matriz-teste
+#| code-fold: false
+
+matriz_de_teste <- conf_matriz(
+  modelo = modelo, 
+  data  = test_sample,
+  threshold = 0.1,
+  teste = TRUE
+  )
+matriz_de_treino
+```
+
