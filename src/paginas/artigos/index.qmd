@@ -1,7 +1,7 @@
 ---
 title: "Artigos"
 listing:
-  contents: .            # lista os artigos nas subpastas desta pasta
+  contents: .            
   sort: "date desc"
   type: default
   categories: true
