@@ -15,7 +15,7 @@ tabela_correlacoes <- function(dados, limite = 0.8) {
     )
   }
 
-  matrix_de_correlacoes <- cor(dados, use = "pairwise.complete.obs")
+  matrix_de_correlacoes <- cor(dados)
   index <- which(
     upper.tri(matrix_de_correlacoes) 
     & abs(matrix_de_correlacoes) >= limite,
