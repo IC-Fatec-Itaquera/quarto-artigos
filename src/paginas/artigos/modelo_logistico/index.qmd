@@ -3,7 +3,6 @@ title: "Modelo Logistico "
 author: "Allan"
 date: "2026-09-07"
 categories: [estatística, regressão]
-image: exemplo.png
 format: html
 ---
 

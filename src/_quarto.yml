@@ -7,8 +7,9 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
-      - href: artigos.qmd
+      - href: paginas/sobre_o_projeto/about.qmd
+        text: Sobre o projeto
+      - href: paginas/artigos/index.qmd
         text: Artigos
 
 format:
