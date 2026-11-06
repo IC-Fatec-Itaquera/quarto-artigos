@@ -1,0 +1,31 @@
+color:
+  palette:
+    vermelho-base: "#B20000"
+    vermelho-escuro-10: "#7E0000"
+
+    azul-base: "#005C6D"
+    azul-destaque: "#00C1CF"
+
+    prata-base: "#F8F8F8"
+    cinza-base: "#666666"
+    cinza-claro: "#DADADA"
+
+  background: prata-base
+  foreground: "#000000"
+  primary: azul-destaque
+  secondary: azul-base
+  link: azul-base
+
+logo:
+  medium: ../assets/logos/cps-horizontal.png
+
+typography:
+  fonts:
+    - family: Verdana
+      source: system
+  base: Verdana
+  headings:
+    family: Verdana
+    weight: 700
+  link:
+    decoration: underline
