@@ -1,5 +1,5 @@
 # IC
-Iniciaçao cientifica FATEC Itaquera , classificação de dados utilizando regressão Logistica, professora: Claudia de Lello Courtouké 
+Iniciação científica FATEC Itaquera, classificação de dados utilizando regressão logística, professora: Claudia de Lello Courtouké
 
 # dependências R com renv
 
@@ -35,23 +35,39 @@ O `renv` centraliza essa responsabilidade em `src/renv.lock`. O workflow apenas 
 
 ## onde ficam os arquivos
 
-Os arquivos do `renv` ficam dentro de `src/`, porque é ali que está o projeto Quarto:
+A estrutura do repositório é:
 
 ```text
-src/
-  .Rprofile             # ativa o renv ao abrir o projeto
-  renv.lock             # versões exatas dos pacotes
-  renv/
-    activate.R          # script de ativação
-    settings.json       # configurações do renv
-    library/            # pacotes instalados localmente (não versionar)
+.
+├── .github/
+│   └── workflows/
+│       └── publish.yml      # build e publicação no GitHub Pages
+├── README.md
+└── src/                     # projeto Quarto
+    ├── IC.Rproj             # projeto do RStudio
+    ├── .Rprofile            # ativa o renv ao abrir o projeto
+    ├── _quarto.yml          # configuração do site
+    ├── index.qmd            # home
+    ├── assets/
+    │   └── logos/           # logos institucionais
+    ├── paginas/
+    │   ├── sobre_o_projeto/ # página sobre o projeto
+    │   └── artigos/         # artigos e _metadata.yml com os defaults
+    ├── styles/
+    │   ├── _brand.yml       # cores, fontes e logo da marca
+    │   └── custom.scss      # ajustes de estilo sobre o tema
+    ├── renv.lock            # versões exatas dos pacotes
+    └── renv/
+        ├── activate.R       # script de ativação
+        ├── settings.json    # configurações do renv
+        └── library/         # pacotes instalados localmente (não versionar)
 ```
 
 A pasta `src/renv/library/` é ignorada pelo Git. Ela é reconstruída com `renv::restore()`.
 
 ## primeira vez no projeto
 
-Abra o projeto `src/iniciacao_cientifica.Rproj` no RStudio ou entre na pasta `src` pelo terminal:
+Abra o projeto `src/IC.Rproj` no RStudio ou entre na pasta `src` pelo terminal:
 
 ```bash
 cd src
