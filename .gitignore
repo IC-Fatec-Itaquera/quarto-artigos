@@ -1,4 +1,17 @@
-.Rproj.user
+# Quarto build output
+src/_site/
+src/_freeze/
+*_files/
+*_cache/
+
+# RStudio / R
+.Rproj.user/
 .Rhistory
 .RData
 .Ruserdata
+.Renviron
+.env
+
+# Sistema
+.DS_Store
+Thumbs.db
