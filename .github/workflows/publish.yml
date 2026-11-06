@@ -46,7 +46,7 @@ jobs:
 
   deploy-in-ghpages:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: build
+    needs: render-quarto-project
     runs-on: ubuntu-latest
     environment:
       name: github-pages
