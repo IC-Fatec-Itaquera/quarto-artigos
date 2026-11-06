@@ -1,8 +1,11 @@
 project:
   type: website
+  brand: styles/_brand.yml
+
+lang: pt-BR
 
 website:
-  title: "Iniciaçao Cientifica"
+  title: "Iniciação Científica"
   navbar:
     left:
       - href: index.qmd
@@ -14,5 +17,5 @@ website:
 
 format:
   html:
-    theme: [cosmo, brand, style/brand.scss]
+    theme: [cosmo, brand, styles/custom.scss]
     toc: true
