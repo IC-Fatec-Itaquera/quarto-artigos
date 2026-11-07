@@ -2,6 +2,19 @@
 title: "IC"
 ---
 
-This is a Quarto website.
+# Classificação de Dados Utilizando Regressão Logistica 
+## problematica
+A crescente disponibilidade de dados em diversas áreas demanda métodos, algoritmos eficientes
+de classificação para apoio à tomada de decisão. A regressão logística é amplamente utilizada para
+problemas de classificação em que a variável resposta qualitativa possui duas únicas possibilidades
+(e.g. adimplente/inadimplente). Contudo, sua aplicação prática em ambientes acadêmicos ainda é
+pouco explorada por alunos de graduação. Dessa maneira, este projeto procura investigar como a
+regressão logística pode ser aplicada a problemas reais de classificação por meio da linguagem R,
+bem como avaliar sua eficácia em relação a outras abordagens mais simples.
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+## Justificativa
+O estudo da regressão logística é fundamental na formação de estudantes das áreas de estatística,
+ciência de dados e computação. Sua aplicação prática contribui para o desenvolvimento de
+habilidades analíticas e computacionais. Além disso, o uso da linguagem R favorece a
+reprodutibilidade e compreensão dos modelos. Este projeto visa aproximar teoria e prática,
+preparando o(a) aluno(a) para desafios reais envolvendo análise de dados.
