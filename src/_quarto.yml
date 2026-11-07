@@ -5,15 +5,20 @@ project:
 lang: pt-BR
 
 website:
-  title: "Iniciação Científica"
   navbar:
+    search: true
     left:
       - href: index.qmd
         text: Home
-      - href: paginas/sobre_o_projeto/about.qmd
-        text: Sobre o projeto
+      - href: paginas/sobre_equipe/about.qmd
+        text: Equipe de pesquisa 
       - href: paginas/artigos/index.qmd
-        text: Artigos
+        text: Artigos produzidos
+    tools:
+      - icon: github
+        menu:
+          - text: ver codigo
+            href: https://github.com/IC-Fatec-Itaquera/quarto-artigos.git
 
 format:
   html:
