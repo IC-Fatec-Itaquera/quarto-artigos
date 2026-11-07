@@ -1,0 +1,9 @@
+---
+title: "404 pagina nao encontrada"
+format: html
+---
+
+# 404 Pagina nao encontrada 
+
+Um erro aconteceu ao buscar essa pagina ou essa pagina nao existe.
+retorne para [home](./index.qmd)
