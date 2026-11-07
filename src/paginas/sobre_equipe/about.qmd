@@ -1,0 +1,23 @@
+---
+title: "Equipe de Pesquisa"
+---
+
+# Orientadora
+**Dr.Claudia Courtouké, Ph.D.** 
+
+# Dicentes pesquisadores
+- Allan Chagas da silva
+    - [linkedin]()
+    - [gmail]()
+
+- Sara Dvoranen 
+    - [linkedin]()
+    - [gmail]()
+
+- Pedro Sobrinho    
+    - [linkedin]()
+    - [gmail]()
+
+- Gabriel Couto 
+    - [linkedin]()
+    - [gmail]()
