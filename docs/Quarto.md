@@ -37,6 +37,14 @@ format: # formato de output do 'website'
 
 > se quiser um guia pratico de como usar o quarto, consulte o [guia pratico do Quarto](https://quarto-tdg.org/)
 
+
+### code blocks / code chuncks
+code chuncks sao um pedaço da marcação markdown onde podemos adcionar e rodar codigo R para ser executado, e seu
+output renderizado ou nao, as `code-blocks-options` ou `chunck-options` são o cabeçalho desse pedaço de codigo, nelas 
+podemos definir como queremos o output sai, se quisermos que ele sai, como podemos interagir com a celula na web
+e etc.
+
+
 ## oque resolve, como resolve 
 muitas vezes um pesquisa so existe em um slide de um pdf, em uma planilha que ninguem abre e entao é esquicido o 
 Quarto resolve isso em um tres palavras: Analise, Divulgue , Reproduza.
